@@ -1,3 +1,4 @@
+import 'package:expence_tracker_app/widget/expence_list/expence_list.dart';
 import 'package:flutter/material.dart';
 import 'package:expence_tracker_app/models/expence.dart';
 
@@ -18,21 +19,21 @@ class _ExpensesState extends State<Expences> {
       category: Category.work,
     ),
 
-      Expence(
+    Expence(
       amount: 15.5900,
       date: DateTime.now(),
       title: 'North-East Sikim',
       category: Category.travel,
     ),
 
-      Expence(
+    Expence(
       amount: 1000,
       date: DateTime.now(),
       title: 'Books',
       category: Category.leisure,
     ),
 
-      Expence(
+    Expence(
       amount: 1000,
       date: DateTime.now(),
       title: 'Non-vej',
@@ -43,7 +44,10 @@ class _ExpensesState extends State<Expences> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Column(
-        children: const [Text('The Chart'), Text('The Expences Lists')],
+        children: [
+          const Text('The Chart'),
+          ExpenceList(expence: _registeredExpences),
+        ],
       ),
     );
   }
