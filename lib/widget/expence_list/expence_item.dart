@@ -8,6 +8,29 @@ class ExpenceItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Card(child: Text(expence.title));
+    return Card(
+      child: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 16),
+        child: Column(
+          children: [
+            Text(expence.title),
+            const SizedBox(height: 4),
+            Row(
+              children: [
+                Text('\${$expence.amount.toStringAsFixed(2)}'),
+                Spacer(),
+                Row(
+                  children: [
+                     Icon(categoryIcons[expence.category]),
+                    const SizedBox(width: 8),
+                    Text(expence.formattedDate),
+                  ],
+                ),
+              ],
+            ),
+          ],
+        ),
+      ),
+    );
   }
 }

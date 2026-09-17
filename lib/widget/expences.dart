@@ -1,9 +1,11 @@
+import 'package:expence_tracker_app/new_expence.dart';
 import 'package:expence_tracker_app/widget/expence_list/expence_list.dart';
 import 'package:flutter/material.dart';
 import 'package:expence_tracker_app/models/expence.dart';
 
 class Expences extends StatefulWidget {
   const Expences({super.key});
+
   @override
   State<Expences> createState() {
     return _ExpensesState();
@@ -40,13 +42,31 @@ class _ExpensesState extends State<Expences> {
       category: Category.food,
     ),
   ];
+
+  void _onpenAddExpenceOverlay(){
+    showModalBottomSheet(context: context, builder: (ctx)=> const NewExpence());
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        title: Text("The Flutter Tracker App"),
+        actions: [
+          IconButton(
+            onPressed:_onpenAddExpenceOverlay, 
+            icon: const Icon(Icons.add)),
+        ],       
+      ),
       body: Column(
         children: [
           const Text('The Chart'),
-          ExpenceList(expence: _registeredExpences),
+
+          Expanded(
+            child: ExpenceList(
+              expence: _registeredExpences,
+            ),
+          ),
         ],
       ),
     );

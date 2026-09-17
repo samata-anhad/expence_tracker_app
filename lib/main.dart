@@ -4,8 +4,9 @@ import 'package:expence_tracker_app/widget/expences.dart';
 void main(){    
   runApp 
   (
-    const MaterialApp(
-      home: Expences(),
+    MaterialApp(
+      theme:ThemeData(useMaterial3: true),
+      home: const Expences(),
   ),
   );
 }
