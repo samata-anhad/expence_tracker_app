@@ -43,9 +43,30 @@ class _ExpensesState extends State<Expences> {
     ),
   ];
 
+
+//The Overlay Modal 
   void _onpenAddExpenceOverlay(){
-    showModalBottomSheet(context: context, builder: (ctx)=> const NewExpence());
+    showModalBottomSheet(
+      isScrollControlled:true,
+      context: context, 
+      builder: (ctx)=> NewExpence(onAddExpence:_addExpence),
+    );
   }
+
+//Add Expence when save expence click
+  void _addExpence(Expence expence){
+    
+    setState(() {
+      _registeredExpences.add(expence);
+    });
+  }
+
+  //Remove Expences by Swipe
+void _removeExpence(Expence expence){
+setState(() {
+  _registeredExpences.remove(expence);
+});
+}
 
   @override
   Widget build(BuildContext context) {
@@ -64,7 +85,7 @@ class _ExpensesState extends State<Expences> {
 
           Expanded(
             child: ExpenceList(
-              expence: _registeredExpences,
+              expence: _registeredExpences, onRemoveExpence: _removeExpence,
             ),
           ),
         ],
