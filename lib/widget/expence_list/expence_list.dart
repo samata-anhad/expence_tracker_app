@@ -1,29 +1,30 @@
-import 'package:expence_tracker_app/models/expence.dart';
-import 'package:expence_tracker_app/widget/expence_list/expence_item.dart';
 import 'package:flutter/material.dart';
 
-class ExpenceList extends StatelessWidget {
-  const ExpenceList({
-    super.key, 
-    required this.expence,
-    required this.onRemoveExpence,
-    });
+import 'package:expence_tracker_app/widget/expence_list/expence_item.dart';
+import 'package:expence_tracker_app/models/expence.dart';
 
-  final void Function (Expence expence)onRemoveExpence;
+class ExpensesList extends StatelessWidget {
+  const ExpensesList({
+    super.key,
+    required this.expenses,
+    required this.onRemoveExpense,
+  });
 
-  final List<Expence> expence;
+  final List<Expense> expenses;
+  final void Function(Expense expense) onRemoveExpense;
 
   @override
   Widget build(BuildContext context) {
     return ListView.builder(
-      itemCount: expence.length,
-      itemBuilder: (ctax, index) => Dismissible(
-      //Remove The Expence Item from The List by Swipe
-      key: ValueKey(expence[index]),
-      onDismissed:(direction) {
-      onRemoveExpence(expence[index]);
-      },
-      child: ExpenceItem(expence[index])          
+      itemCount: expenses.length,
+      itemBuilder: (ctx, index) => Dismissible(
+        key: ValueKey(expenses[index]),
+        onDismissed: (direction) {
+          onRemoveExpense(expenses[index]);
+        },
+        child: ExpenseItem(
+          expenses[index],
+        ),
       ),
     );
   }

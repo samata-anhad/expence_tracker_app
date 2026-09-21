@@ -1,10 +1,11 @@
-import 'package:expence_tracker_app/models/expence.dart';
 import 'package:flutter/material.dart';
 
-class ExpenceItem extends StatelessWidget {
-  const ExpenceItem(this.expence, {super.key});
+import 'package:expence_tracker_app/models/expence.dart';
 
-  final Expence expence;
+class ExpenseItem extends StatelessWidget {
+  const ExpenseItem(this.expense, {super.key});
+
+  final Expense expense;
 
   @override
   Widget build(BuildContext context) {
@@ -13,17 +14,17 @@ class ExpenceItem extends StatelessWidget {
         padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 16),
         child: Column(
           children: [
-            Text(expence.title),
+            Text(expense.title),
             const SizedBox(height: 4),
             Row(
               children: [
-                Text('\${$expence.amount.toStringAsFixed(2)}'),
-                Spacer(),
+                Text('\$${expense.amount.toStringAsFixed(2)}'),
+                const Spacer(),
                 Row(
                   children: [
-                     Icon(categoryIcons[expence.category]),
+                    Icon(categoryIcons[expense.category]),
                     const SizedBox(width: 8),
-                    Text(expence.formattedDate),
+                    Text(expense.formattedDate),
                   ],
                 ),
               ],

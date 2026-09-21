@@ -1,92 +1,98 @@
 import 'package:expence_tracker_app/new_expence.dart';
-import 'package:expence_tracker_app/widget/expence_list/expence_list.dart';
 import 'package:flutter/material.dart';
+
+import 'package:expence_tracker_app/widget/expence_list/expence_list.dart';
 import 'package:expence_tracker_app/models/expence.dart';
 
-class Expences extends StatefulWidget {
-  const Expences({super.key});
+class Expenses extends StatefulWidget {
+  const Expenses({super.key});
 
   @override
-  State<Expences> createState() {
+  State<Expenses> createState() {
     return _ExpensesState();
   }
 }
 
-class _ExpensesState extends State<Expences> {
-  final List<Expence> _registeredExpences = [
-    Expence(
-      amount: 15.59,
+class _ExpensesState extends State<Expenses> {
+  final List<Expense> _registeredExpenses = [
+    Expense(
+      title: 'Flutter Course',
+      amount: 19.99,
       date: DateTime.now(),
-      title: 'Flutter Courses',
       category: Category.work,
     ),
-
-    Expence(
-      amount: 15.5900,
+    Expense(
+      title: 'Cinema',
+      amount: 15.69,
       date: DateTime.now(),
-      title: 'North-East Sikim',
-      category: Category.travel,
-    ),
-
-    Expence(
-      amount: 1000,
-      date: DateTime.now(),
-      title: 'Books',
       category: Category.leisure,
-    ),
-
-    Expence(
-      amount: 1000,
-      date: DateTime.now(),
-      title: 'Non-vej',
-      category: Category.food,
     ),
   ];
 
-
-//The Overlay Modal 
-  void _onpenAddExpenceOverlay(){
+  void _openAddExpenseOverlay() {
     showModalBottomSheet(
-      isScrollControlled:true,
-      context: context, 
-      builder: (ctx)=> NewExpence(onAddExpence:_addExpence),
+      isScrollControlled: true,
+      context: context,
+      builder: (ctx) => NewExpense(onAddExpense: _addExpense),
     );
   }
 
-//Add Expence when save expence click
-  void _addExpence(Expence expence){
-    
+  void _addExpense(Expense expense) {
     setState(() {
-      _registeredExpences.add(expence);
+      _registeredExpenses.add(expense);
     });
   }
 
-  //Remove Expences by Swipe
-void _removeExpence(Expence expence){
-setState(() {
-  _registeredExpences.remove(expence);
-});
-}
+  void _removeExpense(Expense expense) {
+    final expenseIndex = _registeredExpenses.indexOf(expense);
+    setState(() {
+      _registeredExpenses.remove(expense);
+    });
+    ScaffoldMessenger.of(context).clearSnackBars();
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        duration: const Duration(seconds: 3),
+        content: const Text('Expense deleted.'),
+        action: SnackBarAction(
+          label: 'Undo',
+          onPressed: () {
+            setState(() {
+              _registeredExpenses.insert(expenseIndex, expense);
+            });
+          },
+        ),
+      ),
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
+    Widget mainContent = const Center(
+      child: Text('No expenses found. Start adding some!'),
+    );
+
+    if (_registeredExpenses.isNotEmpty) {
+      mainContent = ExpensesList(
+        expenses: _registeredExpenses,
+        onRemoveExpense: _removeExpense,
+      );
+    }
+
     return Scaffold(
       appBar: AppBar(
-        title: Text("The Flutter Tracker App"),
+        title: const Text('Flutter ExpenseTracker'),
         actions: [
           IconButton(
-            onPressed:_onpenAddExpenceOverlay, 
-            icon: const Icon(Icons.add)),
-        ],       
+            onPressed: _openAddExpenseOverlay,
+            icon: const Icon(Icons.add),
+          ),
+        ],
       ),
       body: Column(
         children: [
-          const Text('The Chart'),
-
+          const Text('The chart'),
           Expanded(
-            child: ExpenceList(
-              expence: _registeredExpences, onRemoveExpence: _removeExpence,
-            ),
+            child: mainContent,
           ),
         ],
       ),
