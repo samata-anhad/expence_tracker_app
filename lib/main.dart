@@ -87,6 +87,7 @@ void main() {
 
       // Starting screen
       home: const Expenses(),
+      debugShowCheckedModeBanner: false,
     ),
   );
 }
