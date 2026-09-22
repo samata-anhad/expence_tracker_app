@@ -1,30 +1,65 @@
-// This is a basic Flutter widget test.
-//
-// To perform an interaction with a widget in your test, use the WidgetTester
-// utility in the flutter_test package. For example, you can send tap and scroll
-// gestures. You can also use WidgetTester to find child widgets in the widget
-// tree, read text, and verify that the values of widget properties are correct.
-
 import 'package:flutter/material.dart';
-import 'package:flutter_test/flutter_test.dart';
+import 'package:expence_tracker_app/widget/expences.dart';
 
-import 'package:expence_tracker_app/main.dart';
+//Creating The Color own Color Wizerd Scheme, So that selecting on the base color once others will autometically selected according to the base color
+
+//LightColor Theme
+var kColorScheme = ColorScheme.fromSeed(
+  seedColor: Color.fromARGB(255, 96, 59, 181),
+);
+
+//DarkColor Theme
+var kDarkColorScheme = ColorScheme.fromSeed(
+  brightness: Brightness.dark,
+  seedColor: Color.fromARGB(255, 5, 99, 125),
+);
 
 void main() {
-  testWidgets('Counter increments smoke test', (WidgetTester tester) async {
-    // Build our app and trigger a frame.
-    await tester.pumpWidget(const MyApp());
+  runApp(
+    MaterialApp(
+      darkTheme: ThemeData().copyWith(
+        // ignore: deprecated_member_use
+        useMaterial3: true,
+        colorScheme: kDarkColorScheme,
+        cardTheme: CardThemeData().copyWith(
+          color: kDarkColorScheme.onSecondaryContainer,
+          margin: EdgeInsets.symmetric(horizontal: 16, vertical: 20),
+        ),
+        elevatedButtonTheme: ElevatedButtonThemeData(
+          style: ElevatedButton.styleFrom(
+            backgroundColor: kDarkColorScheme.onPrimaryContainer,
+            foregroundColor: kDarkColorScheme.primaryContainer
+          ),
+        ),
+      ),
+      theme: ThemeData().copyWith(
+        // ignore: deprecated_member_use
+        useMaterial3: true,
+        colorScheme: kColorScheme,
+        appBarTheme: const AppBarTheme().copyWith(
+          backgroundColor: kColorScheme.onPrimaryContainer,
+          foregroundColor: kColorScheme.primaryContainer,
+        ),
 
-    // Verify that our counter starts at 0.
-    expect(find.text('0'), findsOneWidget);
-    expect(find.text('1'), findsNothing);
+        cardTheme: CardThemeData().copyWith(
+          color: kColorScheme.onSecondaryContainer,
+          margin: EdgeInsets.symmetric(horizontal: 16, vertical: 20),
+        ),
+        elevatedButtonTheme: ElevatedButtonThemeData(
+          style: ElevatedButton.styleFrom(
+            backgroundColor: kColorScheme.primaryContainer,
+          ),
+        ),
 
-    // Tap the '+' icon and trigger a frame.
-    await tester.tap(find.byIcon(Icons.add));
-    await tester.pump();
-
-    // Verify that our counter has incremented.
-    expect(find.text('0'), findsNothing);
-    expect(find.text('1'), findsOneWidget);
-  });
+        textTheme: TextTheme().copyWith(
+          titleLarge: TextStyle(
+            fontWeight: FontWeight.normal,
+            color: kColorScheme.onSecondaryContainer,
+            fontSize: 14,
+          ),
+        ),
+      ),
+      home: const Expenses(),
+    ),
+  );
 }

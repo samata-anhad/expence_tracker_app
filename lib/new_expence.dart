@@ -33,8 +33,9 @@ class _NewExpenseState extends State<NewExpense> {
   }
 
   void _submitExpenseData() {
-    final enteredAmount = double.tryParse(_amountController
-        .text); // tryParse('Hello') => null, tryParse('1.12') => 1.12
+    final enteredAmount = double.tryParse(
+      _amountController.text,
+    ); // tryParse('Hello') => null, tryParse('1.12') => 1.12
     final amountIsInvalid = enteredAmount == null || enteredAmount <= 0;
     if (_titleController.text.trim().isEmpty ||
         amountIsInvalid ||
@@ -44,7 +45,8 @@ class _NewExpenseState extends State<NewExpense> {
         builder: (ctx) => AlertDialog(
           title: const Text('Invalid input'),
           content: const Text(
-              'Please make sure a valid title, amount, date and category was entered.'),
+            'Please make sure a valid title, amount, date and category was entered.',
+          ),
           actions: [
             TextButton(
               onPressed: () {
@@ -85,9 +87,8 @@ class _NewExpenseState extends State<NewExpense> {
           TextField(
             controller: _titleController,
             maxLength: 50,
-            decoration: const InputDecoration(
-              label: Text('Title'),
-            ),
+            style: TextStyle(color: Theme.of(context).colorScheme.onSurface),
+            decoration: InputDecoration(label: const Text('Title')),
           ),
           Row(
             children: [
@@ -95,9 +96,12 @@ class _NewExpenseState extends State<NewExpense> {
                 child: TextField(
                   controller: _amountController,
                   keyboardType: TextInputType.number,
-                  decoration: const InputDecoration(
+                  style: TextStyle(
+                    color: Theme.of(context).colorScheme.onSurface,
+                  ),
+                  decoration: InputDecoration(
                     prefixText: '\$ ',
-                    label: Text('Amount'),
+                    label: const Text('Amount'),
                   ),
                 ),
               ),
@@ -114,9 +118,7 @@ class _NewExpenseState extends State<NewExpense> {
                     ),
                     IconButton(
                       onPressed: _presentDatePicker,
-                      icon: const Icon(
-                        Icons.calendar_month,
-                      ),
+                      icon: const Icon(Icons.calendar_month),
                     ),
                   ],
                 ),
@@ -134,6 +136,9 @@ class _NewExpenseState extends State<NewExpense> {
                         value: category,
                         child: Text(
                           category.name.toUpperCase(),
+                          style: TextStyle(
+                            color: Theme.of(context).colorScheme.onSurface,
+                          ),
                         ),
                       ),
                     )
